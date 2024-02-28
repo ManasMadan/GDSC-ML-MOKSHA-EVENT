@@ -11,7 +11,8 @@ def main():
 def level1():
     try:
         data = request.get_json()
-        result = similar_words(data["result"], "password")
+        prompt = data["prompt"]
+        result = similar_words(prompt, "password")
         return jsonify({"error":False,"message":"Success","result":result})
     except Exception as e:
         print(e)

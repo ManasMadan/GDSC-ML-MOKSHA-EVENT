@@ -1,0 +1,14 @@
+Flask==3.0.2
+Flask-Cors==4.0.0
+en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl#sha256=86cc141f63942d4b2c5fcee06630fd6f904788d2f0ab005cce45aadb8fb73889
+google-ai-generativelanguage==0.4.0
+google-api-core==2.17.1
+google-auth==2.28.1
+google-generativeai==0.3.2
+googleapis-common-protos==1.62.0
+numpy==1.26.1
+spacy==3.7.4
+spacy-legacy==3.0.12
+spacy-loggers==1.0.5
+scikit-learn==1.4.1.post1

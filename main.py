@@ -4,7 +4,10 @@ from level_2 import Level2
 from level_3 import Level3
 from level_4 import runLevel
 import Level5 
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')

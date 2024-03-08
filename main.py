@@ -157,8 +157,8 @@ def leaderBoard():
     try:
         db = firestore.client()
         users_ref = db.collection('users')
-        all_users = [doc.to_dict() for doc in users_ref.stream()]
-        return jsonify(all_users), 200
+        users_data_without_session_token = [{k: v for k, v in doc.to_dict().items() if k != 'SessionToken'} for doc in users_ref.stream()]
+        return jsonify(users_data_without_session_token), 200
     except Exception as e:
         return jsonify({"error": True, "message": str(e), "result": "Error"}), 401
 

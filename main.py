@@ -60,7 +60,7 @@ def saveLevelCompleted(level,user_id):
         data_ref = db.collection('users').document(user_id).get().to_dict()
         data_ref[f'level{level}Time'] = getRemainingTime(request.session_data['iat'])
         user_ref.set(data_ref)
-        return jsonify({"error": False, "message": "Success", "result": "Level Cleared"}), 200
+        return jsonify({"error": False, "message": "Success", "result": "J9pRmKqL8sN6wT3vE2yH7gXuZ1iB4oD5"}), 200
     except Exception as e:
         return jsonify({"error": True, "message": str(e), "result": "Error"}), 401
 

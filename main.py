@@ -21,7 +21,7 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 JWT_SECRET = 'wsdkOIWrfhnNDMIOPKWFdmSDMFOUbnWS'
-API_KEY = "AIzaSyD9keearQmkMVP_2WnqGUW8KFvg9lBY4lQ"
+API_KEY = "AIzaSyD9keearQmkMVP_2WnqGUW8KFvg9lBY4LK"
 
 
 def getRemainingTime(iat_timestamp):
@@ -127,7 +127,7 @@ def create_session_token():
         user_ref = db.collection('users').document(request.user_id)
 
         if not user_ref.get().exists:
-            expiration = datetime.now(timezone.utc) + timedelta(hours=30)
+            expiration = datetime.now(timezone.utc) + timedelta(minutes=20)
             message = {
                 'iss': 'https://example.com/',
                 'sub': request.user_email,

@@ -112,8 +112,8 @@ class Level:
                 return resp_f.text
             else:
                 return self.rechecking(response.text,userPrompt)
-        except:
-            return "I'm sorry, I can't do that.(Error in chat function)"
+        except Exception as e:
+            return str(e)
 
 
 

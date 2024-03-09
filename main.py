@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from level1 import similar_words
 from level_2 import Level2
 from level_3 import Level3
-from level_4 import runLevel
+from level_4 import lev4again
 import Level5
 from flask_cors import CORS
 import firebase_admin
@@ -20,6 +20,7 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 JWT_SECRET = 'wsdkOIWrfhnNDMIOPKWFdmSDMFOUbnWS'
+API_KEY = "AIzaSyD9keearQmkMVP_2WnqGUW8KFvg9lBY4lQ"
 
 
 def getRemainingTime(iat_timestamp):
@@ -38,7 +39,7 @@ def getRemainingTime(iat_timestamp):
     minutes_difference = time_difference.total_seconds() // 60
     seconds_difference = time_difference.total_seconds() % 60
 
-    return (f"{int(minutes_difference)} : {int(seconds_difference)} seconds")
+    return (f"{int(minutes_difference)} : {int(seconds_difference)}")
 
 # Function to serialize datetime objects to string
 
@@ -70,9 +71,16 @@ def serialize_datetime(dt):
         return dt.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
     return dt
 
+def get_pass_by_email(email,level):
+    password = ['TheStand','AmericanPrometheus','Angle','AntiMatter','Judgmentday']
+    with open('output.json', 'r') as file:
+        data = json.load(file)
+    for user in data:
+        if user['email'].lower() == email:
+            return user[f'level_{level}']
+    return password[level-1]
+
 # Authentication decorator
-
-
 def authenticate(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -88,9 +96,8 @@ def authenticate(func):
         return func(*args, **kwargs)
     return wrapper
 
+
 # JWT token verification decorator
-
-
 def verify_jwt_token(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -167,8 +174,9 @@ def leaderBoard():
 @verify_jwt_token
 def level1():
     try:
-        if (request.get_json()["prompt"].lower() != "password"):
-            result = similar_words(request.get_json()["prompt"], "password")            
+        levelPassword = get_pass_by_email(request.session_data["sub"],1)
+        if (request.get_json()["prompt"].lower() != levelPassword.lower()):
+            result = similar_words(request.get_json()["prompt"], "password", levelPassword)            
             return saveLevelPrompts(1,request.session_data["user_id"],result)
         else:            
             return saveLevelCompleted(1,request.session_data["user_id"])
@@ -181,9 +189,9 @@ def level1():
 @verify_jwt_token
 def level2():
     try:
-        if (request.get_json()["prompt"].lower() != "americanprometheus"):
-            password = "AmericanPrometheus"
-            x = Level2(password)
+        levelPassword = get_pass_by_email(request.session_data["sub"],2)
+        if (request.get_json()["prompt"].lower() != levelPassword.lower()):
+            x = Level2(levelPassword,API_KEY)
             result = ""
             """ if password in request.get_json()["prompt"]:
                 result = "You cracked the code."
@@ -202,8 +210,10 @@ def level2():
 @verify_jwt_token
 def level3():
     try:
-        if (request.get_json()["prompt"].lower() != "dodo"):
+        levelPassword = get_pass_by_email(request.session_data["sub"],3)
+        if (request.get_json()["prompt"].lower() != levelPassword.lower()):
             level3Instance = Level3()
+            level3Instance.setPassword(levelPassword)
             result = level3Instance.runChat(request.get_json()["prompt"])
             return saveLevelPrompts(3,request.session_data["user_id"],result)
         else:
@@ -217,8 +227,10 @@ def level3():
 @verify_jwt_token
 def level4():
     try:
-        if (request.get_json()["prompt"].lower() != "2345jkl"):
-            result = runLevel(request.get_json()["prompt"])
+        levelPassword = get_pass_by_email(request.session_data["sub"],4)
+        if (request.get_json()["prompt"].lower() != levelPassword.lower()):
+            level4Instance = lev4again(levelPassword,API_KEY)
+            result = level4Instance.runLevel(request.get_json()["prompt"])
             return saveLevelPrompts(4,request.session_data["user_id"],result)
         else:
             return saveLevelCompleted(4,request.session_data["user_id"])
@@ -231,8 +243,9 @@ def level4():
 @verify_jwt_token
 def level5():
     try:
-        if (request.get_json()["prompt"].lower() != "warrior"):
-            l5 = Level5.Level("Warrior")
+        levelPassword = get_pass_by_email(request.session_data["sub"],5)
+        if (request.get_json()["prompt"].lower() != levelPassword.lower()):
+            l5 = Level5.Level(levelPassword,API_KEY)
             result = l5.chat_start(request.get_json()["prompt"])
             return saveLevelPrompts(5,request.session_data["user_id"],result)
         else:

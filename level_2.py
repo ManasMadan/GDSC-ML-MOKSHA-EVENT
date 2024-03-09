@@ -3,8 +3,8 @@ import random
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 class Level2:
-  def __init__(self, passwd) -> None:
-    genai.configure(api_key="AIzaSyAF-XoggWVDM_XJhZvPd4Cas9sjxQN5vaM")
+  def __init__(self, passwd,apiKey) -> None:
+    genai.configure(api_key=apiKey)
     generation_config = {
       "temperature": 1,
       "top_p": 1,

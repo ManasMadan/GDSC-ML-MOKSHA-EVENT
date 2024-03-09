@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
-from level1 import similar_words
+from level1 import similar_words, getHint
 from level_2 import Level2
 from level_3 import Level3
+from Level3_class import Level3
 from level_4 import lev4again
 import Level5
 from flask_cors import CORS
@@ -175,8 +176,11 @@ def leaderBoard():
 def level1():
     try:
         levelPassword = get_pass_by_email(request.session_data["sub"],1)
-        if (request.get_json()["prompt"].lower() != levelPassword.lower()):
-            result = similar_words(request.get_json()["prompt"], "password", levelPassword)            
+        if ("hint" in request.get_json()["prompt"].lower()):
+            result = getHint(levelPassword,API_KEY)
+            return saveLevelPrompts(1,request.session_data["user_id"],result)
+        elif (request.get_json()["prompt"].lower() != levelPassword.lower()):
+            result = similar_words(request.get_json()["prompt"], levelPassword, levelPassword)            
             return saveLevelPrompts(1,request.session_data["user_id"],result)
         else:            
             return saveLevelCompleted(1,request.session_data["user_id"])
@@ -212,9 +216,8 @@ def level3():
     try:
         levelPassword = get_pass_by_email(request.session_data["sub"],3)
         if (request.get_json()["prompt"].lower() != levelPassword.lower()):
-            level3Instance = Level3()
-            level3Instance.setPassword(levelPassword)
-            result = level3Instance.runChat(request.get_json()["prompt"])
+            level3Instance = Level3(levelPassword,API_KEY)
+            result = level3Instance.chat_start(request.get_json()["prompt"])
             return saveLevelPrompts(3,request.session_data["user_id"],result)
         else:
             return saveLevelCompleted(3,request.session_data["user_id"])

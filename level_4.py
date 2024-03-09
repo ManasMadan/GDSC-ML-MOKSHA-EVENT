@@ -185,10 +185,11 @@ class lev4again:
         convo.send_message(prompt)
         return convo.last.text
 
-    def runLevel(self,user_in):
+    def runLevel(user_in,password,apiKey):
         # Get user input
         
         danger_stuff = ["kill", "death", "suicide", "murder", "harm", "harmful"]
+        level4Instance = lev4again(password,apiKey)
 
         def harmful_prompts(prompt, harmfulstuff):
             doc1 = nlp(prompt)
@@ -210,15 +211,15 @@ class lev4again:
 
         def password_in_final_answer(reply):
             doc1 = nlp(reply)
-            if self.password in doc1:
+            if password in doc1:
                 return True
 
         def alter_final_answer(reply):
             prompt = "you gave away the password please reconsider your response"
-            another_reply = lev4again.gemini_response(prompt)
+            another_reply = level4Instance.gemini_response(prompt)
             return another_reply
 
-        score = lev4again.gemini_to_rescue(user_in)
+        score = level4Instance.gemini_to_rescue(user_in)
         if harmful_prompts(user_in, danger_stuff):
             return "This stuff will not work on me"
         else:
@@ -232,12 +233,12 @@ class lev4again:
             # Now compare
 
             if score_float > 0.6:
-                response = lev4again.gemini_response(user_in)
+                response = level4Instance.gemini_response(user_in)
                 if password_in_final_answer(response):
                     last_reply = alter_final_answer(response)
                     return last_reply
                 else:
                     return response
             else:
-                normal_response = lev4again.normal_reply(user_in)
+                normal_response = level4Instance.normal_reply(user_in)
                 return normal_response

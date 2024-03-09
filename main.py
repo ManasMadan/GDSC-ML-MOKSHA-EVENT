@@ -220,7 +220,7 @@ def level3():
             return saveLevelCompleted(3,request.session_data["user_id"])
     except Exception as e:
         print(e)
-        return jsonify({"error": True, "message": "Something Went Wrong", "result": None})
+        return jsonify({"error": True, "message": str(e), "result": "Error"})
 
 
 @app.route('/level4', methods=['POST'])
@@ -229,14 +229,14 @@ def level4():
     try:
         levelPassword = get_pass_by_email(request.session_data["sub"],4)
         if (request.get_json()["prompt"].lower() != levelPassword.lower()):
-            level4Instance = lev4again(levelPassword,API_KEY)
-            result = level4Instance.runLevel(request.get_json()["prompt"])
+            #level4Instance = lev4again(levelPassword,API_KEY)
+            result = lev4again.runLevel(request.get_json()["prompt"],levelPassword,API_KEY)
             return saveLevelPrompts(4,request.session_data["user_id"],result)
         else:
             return saveLevelCompleted(4,request.session_data["user_id"])
     except Exception as e:
         print(e)
-        return jsonify({"error": True, "message": "Something Went Wrong", "result": None})
+        return jsonify({"error": True, "message": str(e), "result": "Error"})
 
 
 @app.route('/level5', methods=['POST'])
@@ -252,7 +252,7 @@ def level5():
             return saveLevelCompleted(5,request.session_data["user_id"])
     except Exception as e:
         print(e)
-        return jsonify({"error": True, "message": "Something Went Wrong", "result": None})
+        return jsonify({"error": True, "message": str(e), "result": "Error"})
 
 
 if __name__ == '__main__':

@@ -93,7 +93,7 @@ class Level3:
 
   passw = "Dodo" # Enter Password Here
   
-  def setPassword(password):
+  def setPassword(self,password):
     global passw
     passw = password
     

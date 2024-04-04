@@ -21,7 +21,7 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 JWT_SECRET = 'wsdkOIWrfhnNDMIOPKWFdmSDMFOUbnWS'
-API_KEY = "AIzaSyD9keearQmkMVP_2WnqGUW8KFvg9lBY4LK"
+API_KEY = "AIzaSyD9keearQmkMVP_2WnqGUW8KFvg9lBY4lQ"
 
 
 def getRemainingTime(iat_timestamp):

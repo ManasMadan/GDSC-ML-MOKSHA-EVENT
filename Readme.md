@@ -14,3 +14,6 @@ flask --app main run --debug
 - [Dheeraj Sharma](https://github.com/greatnerve)
 - [Jagrat Singh](https://github.com/jagrat04)
 - [Ravi Kumar](https://github.com/RaviKumar300)
+- [Naman Bansal](https://www.github.com/Nb4159)
+- [Prasann](https://www.github.com/Prasan2004)
+- [Tanish Saxena](https://www.github.com/tanxena)
